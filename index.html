@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocPointify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>DocPointify</h1>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#appointments">Appointments</a></li>
+                    <li><a href="#patients">Patients</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="dashboard" class="section">
+        <div class="container">
+            <h2>Welcome to DocPointify</h2>
+            <p>Your personalized platform to manage your practice effortlessly.</p>
+            <button id="viewStats">View Stats</button>
+            <div id="stats" style="display: none;">
+                <p>Total Patients: 120</p>
+                <p>Scheduled Appointments: 34</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="appointments" class="section">
+        <div class="container">
+            <h2>Manage Appointments</h2>
+            <form id="appointmentForm">
+                <input type="text" id="patientName" placeholder="Patient Name" required>
+                <input type="date" id="appointmentDate" required>
+                <button type="submit">Add Appointment</button>
+            </form>
+            <ul id="appointmentList"></ul>
+        </div>
+    </section>
+
+
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 DocPointify. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
