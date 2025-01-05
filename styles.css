@@ -9,11 +9,19 @@ header {
     background-color: #4CAF50;
     color: white;
     padding: 15px 0;
-    text-align: center;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
 }
 
 header h1 {
     margin: 0;
+    text-align: left;
 }
 
 nav ul {
@@ -68,3 +76,7 @@ ul#appointmentList {
     padding: 0;
 }
 
+.new-appointment {
+    background-color: #d4edda;
+    transition: background-color 2s ease;
+}
