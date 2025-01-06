@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patients - DocPointify</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="patients_style.css">
 </head>
-<body>
+<body>  
     <header>
         <div class="container">
             <h1>DocPointify</h1>
@@ -20,17 +20,41 @@
         </div>
     </header>
 
-    <section id="patients" class="section">
-        <div class="container">
-            <h2>Patient Information</h2>
-            <p>Manage patient details here.</p>
-        </div>
-    </section>
+    <div class="form-container">
+        <form id="infoForm">
+            <input type="text" id="input1" placeholder="Input 1" required>
+            <input type="text" id="input2" placeholder="Input 2" required>
+            <input type="text" id="input3" placeholder="Input 3" required>
+            <input type="text" id="input4" placeholder="Input 4" required>
+            <input type="text" id="input5" placeholder="Input 5" required>
+            <button type="button" onclick="addInfo()">Add Information</button>
+        </form>
+    </div>
+
+    <h3>Saved Information</h3>
+
+    <table id="infoTable">
+        <thead>
+            <tr>
+                <th>Input 1</th>
+                <th>Input 2</th>
+                <th>Input 3</th>
+                <th>Input 4</th>
+                <th>Input 5</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here dynamically -->
+        </tbody>
+    </table>
 
     <footer>
         <div class="container">
             <p>&copy; 2025 DocPointify</p>
         </div>
     </footer>
+    <script src="p_script.js"></script>
 </body>
 </html>
+
