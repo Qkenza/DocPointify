@@ -1,67 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const statsButton = document.getElementById('viewStats');
-    const statsDiv = document.getElementById('stats');
-    const appointmentForm = document.getElementById('appointmentForm');
-    const appointmentList = document.getElementById('appointmentList');
+    const doctorBtn = document.getElementById('doctorBtn');
+    const assistantBtn = document.getElementById('assistantBtn');
+    const modal = document.getElementById('authModal');
+    const closeModal = document.querySelector('.close');
+    const authTitle = document.getElementById('authTitle');
 
-    // Toggle stats view
-    statsButton.addEventListener('click', () => {
-        const isHidden = statsDiv.style.display === 'none';
-        statsDiv.style.display = isHidden ? 'block' : 'none';
-        statsButton.setAttribute('aria-expanded', isHidden);
+    // Open modal with respective titles
+    doctorBtn.addEventListener('click', () => {
+        authTitle.textContent = 'Doctor Login';
+        modal.style.display = 'block';
     });
 
-    // Save appointments to localStorage
-    const saveAppointments = () => {
-        const appointments = Array.from(appointmentList.children).map(li => li.textContent);
-        localStorage.setItem('appointments', JSON.stringify(appointments));
-    };
+    assistantBtn.addEventListener('click', () => {
+        authTitle.textContent = 'Assistant Login';
+        modal.style.display = 'block';
+    });
 
-    // Load appointments from localStorage
-    const loadAppointments = () => {
-        const savedAppointments = JSON.parse(localStorage.getItem('appointments')) || [];
-        savedAppointments.forEach(appointment => {
-            const li = document.createElement('li');
-            li.textContent = appointment;
-            appointmentList.appendChild(li);
-        });
-    };
+    // Close modal
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
 
-    // Load appointments on page load
-    loadAppointments();
-
-    // Add appointments
-    appointmentForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const patientName = document.getElementById('patientName').value.trim();
-        const appointmentDate = document.getElementById('appointmentDate').value;
-
-        if (patientName && appointmentDate) {
-            // Check for duplicates
-            const existingAppointments = Array.from(appointmentList.children).map(li => li.textContent);
-            const newAppointment = `${patientName} - ${appointmentDate}`;
-            if (existingAppointments.includes(newAppointment)) {
-                alert('This appointment already exists!');
-                return;
-            }
-
-            // Create and append new appointment
-            const li = document.createElement('li');
-            li.textContent = newAppointment;
-            li.classList.add('new-appointment'); // Add class for visual feedback
-            appointmentList.appendChild(li);
-
-            // Save appointments to localStorage
-            saveAppointments();
-
-            // Clear form
-            appointmentForm.reset();
-
-            // Highlight new appointment
-            setTimeout(() => li.classList.remove('new-appointment'), 2000);
-        } else {
-            alert('Please fill out all fields');
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
         }
     });
-});
+
+    // Handle form submission
+    const authForm = document.getElementById('authForm');
+    authForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        // Simple validation (replace with actual authentication logic)
+        if (username && password) {
+            alert(`Welcome, ${username}!`);
+            modal.style.display = 'none';
+            authForm.reset();
+        } else {
+            alert('Please enter both username and password');
+        }
+    });
+}); 
