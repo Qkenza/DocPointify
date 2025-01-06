@@ -1,8 +1,17 @@
 # DocPointify
 
+## Overview
+
 DocPointify is a Web Application designed to help a Doctor and their assistant manage their patient's appointments and schedules. 
 
 This project is modular, allowing the backend team to handle APIs and databases, while the frontend team manages the structure of the website.
+
+## Table of  Contents
+
+- [Overview] (#overview)
+- [CoreFocus] (#Core-focud)
+- [CoreFeatures] (#Core-features)
+
 
 ## Core Focus
 
