@@ -58,7 +58,7 @@ h2::after {
     position: absolute;
     bottom: 0;
     left: 0;
-    animation: underlineAnimation 3s ease-in-out infinite; /* Animated effect */
+    animation: underlineAnimation 4s ease-in-out infinite; /* Animated effect */
 }
 
 /* Keyframes for the underline animation */
