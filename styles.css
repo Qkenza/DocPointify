@@ -1,8 +1,10 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body is at least the height of the viewport */
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
     box-sizing: border-box;
 }
 
@@ -34,6 +36,7 @@ nav ul li a {
 }
 
 .section {
+    flex: 1; /* Allow the section to fill the remaining space */
     padding: 20px 0;
     text-align: center;
 }
@@ -43,7 +46,21 @@ nav ul li a {
     margin: auto;
 }
 
-/* Button Group */
+/* Footer Styles */
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Push the footer to the bottom */
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Button Group (Home Page) */
 .button-group {
     display: flex;
     justify-content: center;
