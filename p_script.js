@@ -2,6 +2,31 @@ window.onload = function() {
     loadTableData();
 };
 
+// Validate the form on submit
+function validateForm() {
+    let valid = true;
+
+    // Check each input for the required attribute
+    const inputs = ['input1', 'input2', 'input3', 'input4', 'input5'];
+    inputs.forEach(function(inputId, index) {
+        const input = document.getElementById(inputId);
+        const errorSpan = document.getElementById('error' + (index + 1));
+
+        if (!input.value.trim()) {
+            errorSpan.textContent = "Please fill this field";
+            errorSpan.style.display = 'inline';
+            valid = false;
+        } else {
+            errorSpan.style.display = 'none';
+        }
+    });
+
+    if (valid) {
+        addInfo(); // Only proceed to add info if the form is valid
+    }
+    return false; // Prevent form submission to avoid page reload
+}
+
 // Add information to localStorage
 function addInfo() {
     const input1 = document.getElementById('input1').value;
@@ -10,58 +35,14 @@ function addInfo() {
     const input4 = document.getElementById('input4').value;
     const input5 = document.getElementById('input5').value;
 
-    let valid = true;
+    const newEntry = { input1, input2, input3, input4, input5 };
+    let entries = JSON.parse(localStorage.getItem('entries')) || [];
+    entries.push(newEntry);
+    localStorage.setItem('entries', JSON.stringify(entries));
+    loadTableData();
 
-    // Validate each input field and show error if empty
-    if (!input1) {
-        document.getElementById('error1').textContent = "Please fill this field";
-        document.getElementById('error1').style.display = 'inline';
-        valid = false;
-    } else {
-        document.getElementById('error1').style.display = 'none';
-    }
-
-    if (!input2) {
-        document.getElementById('error2').textContent = "Please fill this field";
-        document.getElementById('error2').style.display = 'inline';
-        valid = false;
-    } else {
-        document.getElementById('error2').style.display = 'none';
-    }
-
-    if (!input3) {
-        document.getElementById('error3').textContent = "Please fill this field";
-        document.getElementById('error3').style.display = 'inline';
-        valid = false;
-    } else {
-        document.getElementById('error3').style.display = 'none';
-    }
-
-    if (!input4) {
-        document.getElementById('error4').textContent = "Please fill this field";
-        document.getElementById('error4').style.display = 'inline';
-        valid = false;
-    } else {
-        document.getElementById('error4').style.display = 'none';
-    }
-
-    if (!input5) {
-        document.getElementById('error5').textContent = "Please fill this field";
-        document.getElementById('error5').style.display = 'inline';
-        valid = false;
-    } else {
-        document.getElementById('error5').style.display = 'none';
-    }
-
-    // If all fields are filled, add the data to localStorage
-    if (valid) {
-        const newEntry = { input1, input2, input3, input4, input5 };
-        let entries = JSON.parse(localStorage.getItem('entries')) || [];
-        entries.push(newEntry);
-        localStorage.setItem('entries', JSON.stringify(entries));
-        loadTableData();
-        document.getElementById('infoForm').reset();
-    }
+    // Reset form
+    document.getElementById('infoForm').reset();
 }
 
 // Load table data from localStorage
