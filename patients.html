@@ -23,10 +23,20 @@
     <div class="form-container">
         <form id="infoForm">
             <input type="text" id="input1" placeholder="full name" required>
+            <span id="error1" class="error-message"></span> <!-- Error message for input1 -->
+
             <input type="text" id="input2" placeholder="Phone Number" required>
-            <input type="text" id="input3" placeholder="Adress" required>
+            <span id="error2" class="error-message"></span> <!-- Error message for input2 -->
+
+            <input type="text" id="input3" placeholder="Address" required>
+            <span id="error3" class="error-message"></span> <!-- Error message for input3 -->
+
             <input type="text" id="input4" placeholder="Note" required>
-            <input type="text" id="input5" placeholder="Input 5" required>
+            <span id="error4" class="error-message"></span> <!-- Error message for input4 -->
+
+            <input type="text" id="input5" placeholder="ID" required>
+            <span id="error5" class="error-message"></span> <!-- Error message for input5 -->
+
             <button type="button" onclick="addInfo()">Add Information</button>
         </form>
     </div>
@@ -38,9 +48,9 @@
             <tr>
                 <th>full name</th>
                 <th>Phone Number</th>
-                <th>Adress</th>
+                <th>Address</th>
                 <th>Note</th>
-                <th>Input 5</th>
+                <th>ID</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -57,4 +67,3 @@
     <script src="p_script.js"></script>
 </body>
 </html>
-
