@@ -35,6 +35,54 @@ nav ul li a {
     font-weight: bold;
 }
 
+/* Enhance the h2 style with gradient text and animated underline */
+h2 {
+    font-size: 3rem; /* Larger font size for a bold look */
+    font-weight: 700; /* Bold weight for more impact */
+    background: linear-gradient(45deg, #4CAF50, #2196F3); /* Gradient from green to blue */
+    background-clip: text; /* Apply the gradient to the text */
+    color: transparent; /* Make text color transparent so the gradient shows */
+    text-align: center; /* Center the heading */
+    position: relative;
+    margin-bottom: 30px; /* Space below the heading */
+    padding: 10px 0;
+}
+
+/* Add a glowing underline effect */
+h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px; /* Line thickness */
+    background-color: #4CAF50; /* Green color for the underline */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: underlineAnimation 3s ease-in-out infinite; /* Animated effect */
+}
+
+/* Keyframes for the underline animation */
+@keyframes underlineAnimation {
+    0% {
+        width: 0;
+        opacity: 0.5;
+    }
+    50% {
+        width: 100%;
+        opacity: 1;
+    }
+    100% {
+        width: 0;
+        opacity: 0.5;
+    }
+}
+
+/* Adjust the section padding for the Home page */
+#home.section {
+    padding: 40px 0; /* Increased padding for a more spacious feel */
+}
+
+/* Main content section (header + main content) */
 .section {
     flex: 1; /* Allow the section to fill the remaining space */
     padding: 20px 0;
