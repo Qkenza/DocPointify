@@ -182,3 +182,11 @@ footer p {
     }
 }
 
+/* Error Message Styling */
+.error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: none;  /* Hide error messages by default */
+}
+
