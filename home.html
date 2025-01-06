@@ -23,13 +23,25 @@
     <section id="home" class="section">
         <div class="container">
             <h2>Welcome to DocPointify</h2>
-            <button id="viewStats" aria-expanded="false">View Stats</button>
-            <div id="stats" style="display: none;">
-                <p>Total Patients: 120</p>
-                <p>Scheduled Appointments: 34</p>
+            <div class="button-group">
+                <button id="doctorBtn">Doctor</button>
+                <button id="assistantBtn">Assistant</button>
             </div>
         </div>
     </section>
+
+    <!-- Modal for Authorization -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="authTitle">Login</h3>
+            <form id="authForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
