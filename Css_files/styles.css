@@ -67,7 +67,6 @@ nav ul li a:hover {
 nav ul li a:active {
   text-shadow: 0 0 10px #ecf0f1, 0 0 20px #ecf0f1;
 }
-
 /* Enhanced Heading Styles */
 h2 {
   font-size: 3rem; /* Larger font size for a bold look */
