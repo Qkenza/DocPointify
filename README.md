@@ -4,6 +4,11 @@
 
 DocPointify is a web-based application designed to streamline patient and appointment management for doctors and their personal assistant. it works like an online calendar, a virtual agenda, enabling efficient handling of patient information and appointments in a user-friendly interface.
 
+## Table of Content :
+
+- [Description](#description)
+- [Table of Content](#table-of-content)
+- 
 
 ## Features :
 
@@ -79,3 +84,6 @@ Open your browser and go to http://localhost:5000
 - Chaimae [https://github.com/Chaiimae]
 
 
+
+
+[def]: #description
