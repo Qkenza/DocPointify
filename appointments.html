@@ -5,20 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Appointments - DocPointify</title>
     <link rel="stylesheet" href="Css_files/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"
+      rel="stylesheet"
+    />
     <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-      }
       .action-buttons {
         display: flex;
         gap: 5px;
+      }
+      #calendar {
+        margin-top: 20px;
+      }
+      .delete-button {
+        background-color: #ff4444;
+        color: white;
+        border: none;
+        padding: 2px 6px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8em;
+        margin-left: 5px;
+      }
+      .delete-button:hover {
+        background-color: #cc0000;
+      }
+      .fc-event {
+        cursor: default;
+        padding: 2px;
+      }
+      .appointment-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2px;
+      }
+      .appointment-info {
+        flex-grow: 1;
+        margin-right: 5px;
+        font-size: 0.9em;
+      }
+      .appointment-time {
+        color: #666;
+        font-size: 0.8em;
+      }
+      .appointment-name {
+        font-weight: bold;
+        display: block;
       }
     </style>
   </head>
@@ -42,24 +75,24 @@
         <form id="appointmentForm">
           <input
             type="text"
-            id="patientName"
-            placeholder="Patient Name"
+            id="patientNameInput"
+            placeholder="Enter Patient's Name"
             required
           />
-          <!-- Change input type to datetime-local for both date and time -->
           <input type="datetime-local" id="appointmentDateTime" required />
           <button type="submit">Add Appointment</button>
         </form>
-        <ul id="appointmentList"></ul>
+        <div id="calendar"></div>
       </div>
     </section>
 
     <footer>
       <div class="container">
-          <p>&copy; 2025 DocPointify</p>
+        <p>&copy; 2025 DocPointify</p>
       </div>
-  </footer>
-  
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="Js_files/appointments.js"></script>
   </body>
 </html>
