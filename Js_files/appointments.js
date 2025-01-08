@@ -1,102 +1,90 @@
-// Add new appointment to localStorage
-function addAppointment(event) {
-  event.preventDefault(); // Prevent form submission
+window.onload = function () {
+  initializeCalendar();
+};
 
-  // Get values from the form inputs
-  const patientName = document.getElementById("patientName").value;
+function addAppointment(event) {
+  event.preventDefault();
+
+  const patientName = document.getElementById("patientNameInput").value.trim();
   const appointmentDateTime = document.getElementById(
     "appointmentDateTime"
   ).value;
 
-  // Create a new appointment object
-  const newAppointment = { name: patientName, dateTime: appointmentDateTime };
+  if (!patientName) {
+    alert("Please enter the patient's name.");
+    return;
+  }
 
-  // Retrieve existing appointments from localStorage, or initialize an empty array if none
+  const newAppointment = {
+    id: Date.now(),
+    name: patientName,
+    dateTime: appointmentDateTime,
+  };
   let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
-  appointments.push(newAppointment); // Add the new appointment to the array
-
-  // Save the updated appointments array back to localStorage
+  appointments.push(newAppointment);
   localStorage.setItem("appointments", JSON.stringify(appointments));
 
-  // Reload the list data and reset the form
-  loadAppointments();
+  initializeCalendar();
   document.getElementById("appointmentForm").reset();
 }
 
-// Load appointments from localStorage and display them in the list
-function loadAppointments() {
-  const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
-  const appointmentList = document.getElementById("appointmentList");
-  appointmentList.innerHTML = ""; // Clear current list
+function deleteAppointment(appointmentId, event) {
+  event.stopPropagation();
 
-  // Loop through appointments and create a list item for each
-  appointments.forEach((appointment, index) => {
-    const listItem = document.createElement("li");
-    listItem.innerHTML = `
-                    <div class="appointment">
-                        <span class="name">${appointment.name}</span> - 
-                        <span class="dateTime">${new Date(
-                          appointment.dateTime
-                        ).toLocaleString()}</span>
-                        <div class="action-buttons">
-                            <button class="edit-btn" onclick="editAppointment(${index})">Edit</button>
-                            <button class="delete-btn" onclick="deleteAppointment(${index})">Delete</button>
-                        </div>
-                    </div>
-                `;
-    appointmentList.appendChild(listItem);
+  let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+  appointments = appointments.filter(
+    (appointment) => appointment.id !== appointmentId
+  );
+  localStorage.setItem("appointments", JSON.stringify(appointments));
+  initializeCalendar();
+}
+
+function formatTime(date) {
+  return new Date(date).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
   });
 }
 
-// Edit an appointment in localStorage by its index
-function editAppointment(index) {
-  let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
-  const appointment = appointments[index];
+function initializeCalendar() {
+  const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
 
-  // Set the form fields to the current values of the selected appointment
-  document.getElementById("patientName").value = appointment.name;
-  document.getElementById("appointmentDateTime").value = appointment.dateTime;
+  const events = appointments.map((appointment) => ({
+    id: appointment.id,
+    title: appointment.name,
+    start: new Date(appointment.dateTime),
+    extendedProps: {
+      appointmentId: appointment.id,
+      time: appointment.dateTime,
+    },
+  }));
 
-  // Remove the appointment from the array for later updating
-  appointments.splice(index, 1);
-  localStorage.setItem("appointments", JSON.stringify(appointments));
+  const calendarEl = document.getElementById("calendar");
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    events: events,
+    eventContent: function (arg) {
+      const appointmentId = arg.event.extendedProps.appointmentId;
+      const time = formatTime(arg.event.start);
+      return {
+        html: `
+          <div class="appointment-container">
+            <div class="appointment-info">
+              <span class="appointment-name">${arg.event.title}</span>
+              <span class="appointment-time">${time}</span>
+            </div>
+            <button 
+              class="delete-button" 
+              onclick="deleteAppointment(${appointmentId}, event)"
+              title="Delete appointment"
+            >×</button>
+          </div>
+        `,
+      };
+    },
+  });
 
-  // Change the form's submit button text to "Update" for editing
-  const form = document.getElementById("appointmentForm");
-  form.onsubmit = function (event) {
-    event.preventDefault();
-    updateAppointment(index);
-  };
+  calendar.render();
 }
 
-// Update an existing appointment in localStorage
-function updateAppointment(index) {
-  const patientName = document.getElementById("patientName").value;
-  const appointmentDateTime = document.getElementById(
-    "appointmentDateTime"
-  ).value;
-
-  let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
-  appointments[index] = { name: patientName, dateTime: appointmentDateTime }; // Update the appointment
-
-  localStorage.setItem("appointments", JSON.stringify(appointments));
-
-  loadAppointments(); // Reload the list
-  document.getElementById("appointmentForm").reset(); // Reset the form
-  const form = document.getElementById("appointmentForm");
-  form.onsubmit = addAppointment; // Reset the form submit handler
-}
-
-// Delete an appointment from localStorage
-function deleteAppointment(index) {
-  let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
-  appointments.splice(index, 1); // Remove the appointment at the specified index
-  localStorage.setItem("appointments", JSON.stringify(appointments)); // Save the updated array
-  loadAppointments(); // Reload the list
-}
-
-// Load appointments when the page loads
-window.onload = loadAppointments;
-
-// Bind the form's submit event to addAppointment
 document.getElementById("appointmentForm").onsubmit = addAppointment;
