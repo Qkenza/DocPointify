@@ -43,5 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please enter both username and password');
         }
     });
-}); 
-
+});
