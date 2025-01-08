@@ -4,12 +4,6 @@
 
 DocPointify is a web-based application designed to streamline patient and appointment management for doctors and their personal assistant. it works like an online calendar, a virtual agenda, enabling efficient handling of patient information and appointments in a user-friendly interface.
 
-## Table of  Contents
-
-- [Description] (#Description)
-- [CoreFocus] (#Core-focud)
-- [CoreFeatures] (#Core-features)
-
 
 ## Features :
 
@@ -52,4 +46,36 @@ cd DocPointify
 python -m venv venv
 
 3. Install required dependencies:  
+pip install -r requirements.txt
+
+4. Start the MongoDB server:
+mongod
+
+5. Run the Flask application: 
+python app.py
+
+6. Access the web application
+Open your browser and go to http://localhost:5000
+
+
+## API Endpoints
+
+**Patients**:
+- GET /api/patients - Retrieve all patients.
+- POST /api/patients - Add a new patient.
+- GET /api/patients/<patient_id> - Retrieve a specific patient by ID.
+- PUT /api/patients/<patient_id> - Update patient details.
+- DELETE /api/patients/<patient_id> - Delete a patient.
+
+**Appointments** :
+- GET /api/appointments - Retrieve all appointments.
+- POST /api/appointments - Add a new appointment.
+- DELETE /api/appointments/<appointment_id> - Delete an appointment.
+
+## Contributors :
+
+- zakaria bahlaoui [https://github.com/zakariabahlaoui]
+- Mkenza [https://github.com/Qkenza]
+- Chaimae [https://github.com/Chaiimae]
+
 
