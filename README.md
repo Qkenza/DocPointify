@@ -10,10 +10,10 @@ DocPointify is a web-based application designed to streamline patient and appoin
 - [Table of Content](#table-of-content)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation and Setup](#technologies-used)
+- [Installation and Setup](#installation-and-setup)
     - [Steps](#steps)
-- [API Endpoints](api_endpoints)
-
+- [API Endpoints](#api-endpoints)
+- [Contributors](#contributors)
 
 ## Features :
 
@@ -84,11 +84,6 @@ Open your browser and go to http://localhost:5000
 
 ## Contributors :
 
-- zakaria bahlaoui [https://github.com/zakariabahlaoui]
-- Mkenza [https://github.com/Qkenza]
-- Chaimae [https://github.com/Chaiimae]
-
-
-
-
-[def]: #description
+- zakaria bahlaoui : Frontend devoloper [https://github.com/zakariabahlaoui]
+- Mkenza : Frontend devoloper  [https://github.com/Qkenza]
+- Chaimae  : Backend devoloper [https://github.com/Chaiimae]
