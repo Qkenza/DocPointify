@@ -36,7 +36,7 @@ DocPointify is a web-based application designed to streamline patient and appoin
 - Install MongoDB
 - Install pip for managing Python packages
 
-**Steps**:
+  ## Steps :
 
 1. Clone the repository: 
 git clone <repository-url>
