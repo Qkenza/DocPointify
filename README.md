@@ -6,14 +6,15 @@ DocPointify is a web-based application designed to streamline patient and appoin
 
 ## Table of Content :
 
-- [Description](#description)
-- [Table of Content](#table-of-content)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation and Setup](#installation-and-setup)
-    - [Steps](#steps)
+- [Description](#description-)
+- [Table of Content](#table-of-content-)
+- [Features](#features-)
+- [Technologies Used](#technologies-used-)
+- [Installation and Setup](#installation-and-setup-)
+    - [Steps](#steps-)
 - [API Endpoints](#api-endpoints)
-- [Contributors](#contributors)
+- [Contributors](#contributors-)
+
 
 ## Features :
 
