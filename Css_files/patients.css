@@ -1,7 +1,37 @@
-/* Form Section */
+h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 30px;
+  color: #1a679b;
+}
+
+/* Search input */
+.search-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#searchPatient {
+  width: 80%;
+  max-width: 400px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#searchPatient:focus {
+  border-color: #448c46;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
 .form-container {
-  width: 100%;
-  max-width: 600px;
+  width: 80%;
+  max-width: 800px;
   margin: 30px auto;
   background-color: white;
   padding: 20px;
@@ -11,8 +41,8 @@
 
 .form-container input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
@@ -40,19 +70,10 @@
   background-color: #3c8dc3;
 }
 
-/* Table Section */
-h3 {
-  text-align:center;
-  font-size: 1.5rem;
-  margin-top: 30px;
-  color: #1a679b;
-}
-
 #infoTable {
   width: 80%;
   margin: 20px auto;
   border-collapse: collapse;
-  table-layout: fixed;
 }
 
 #infoTable th,
@@ -73,11 +94,6 @@ h3 {
 
 #infoTable tbody tr:hover {
   background-color: #f1f1f1;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
 }
 
 button.edit-btn,
@@ -109,6 +125,13 @@ button.delete-btn:hover {
   background-color: #c0392b;
 }
 
+.error-message {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .form-container {
@@ -123,38 +146,4 @@ button.delete-btn:hover {
     flex-direction: column;
     gap: 10px;
   }
-}
-
-/* Error Message Styling */
-.error-message {
-  color: #e74c3c;
-  font-size: 0.9rem;
-  margin-top: 5px;
-  display: none; /* Hide error messages by default */
-}
-
-/* Style for the search input */
-#searchPatient {
-  width: 100%;
-  max-width: 300px; /* You can adjust the width as needed */
-  padding: 8px 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-/* Focused state of the search input */
-#searchPatient:focus {
-  border-color: #4caf50; /* Green color for focus */
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Subtle green glow */
-  outline: none;
-}
-
-/* Placeholder text style */
-#searchPatient::placeholder {
-  color: #999;
-  font-style: italic;
 }
