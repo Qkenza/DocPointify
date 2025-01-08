@@ -85,6 +85,6 @@ Open your browser and go to http://localhost:5000
 
 ## Contributors :
 
-- zakaria bahlaoui : Frontend devoloper [https://github.com/zakariabahlaoui]
-- Mkenza : Frontend devoloper  [https://github.com/Qkenza]
-- Chaimae  : Backend devoloper [https://github.com/Chaiimae]
+- Zakaria Bahlaoui : Frontend devoloper [https://github.com/zakariabahlaoui]
+- Kenza Marouar : Frontend devoloper  [https://github.com/Qkenza]
+- Chaimae Lahdili  : Backend devoloper [https://github.com/Chaiimae]
