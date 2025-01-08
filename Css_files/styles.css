@@ -130,7 +130,7 @@ h2::after {
 }
 
 button {
-  background-color: #3498db;
+  background-color: #4cd2cb;
   color: white;
   border: none;
   padding: 12px 25px;
@@ -141,7 +141,7 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: #3c8dc3;
 }
 
 /* Footer Styles */
