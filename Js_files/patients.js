@@ -76,11 +76,19 @@ function filterInfo() {
     .getElementById("searchPatient")
     .value.toLowerCase();
   const entries = JSON.parse(localStorage.getItem("entries")) || [];
-  const filteredEntries = entries.filter(
-    (entry) => entry.input1.toLowerCase().includes(searchQuery) // Only filter by Full Name
+  const filteredEntries = entries.filter((entry) =>
+    entry.input1.toLowerCase().includes(searchQuery)
   );
 
   displayFilteredInfo(filteredEntries);
+
+  // Toggle form visibility based on search input
+  const formContainer = document.querySelector(".form-container");
+  if (searchQuery.trim() !== "") {
+    formContainer.style.display = "none";
+  } else {
+    formContainer.style.display = "block";
+  }
 }
 
 // Display filtered information in the table
