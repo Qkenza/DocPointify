@@ -82,7 +82,7 @@ function filterInfo() {
 
   displayFilteredInfo(filteredEntries);
 
-  // Toggle form visibility based on search input
+  // toggle form visibility based on search input
   const formContainer = document.querySelector(".form-container");
   if (searchQuery.trim() !== "") {
     formContainer.style.display = "none";
