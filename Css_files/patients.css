@@ -39,6 +39,10 @@ h3 {
   border-radius: 8px;
 }
 
+.form-container {
+  display: block;
+}
+
 .form-container input {
   width: 100%;
   padding: 10px;
