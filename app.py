@@ -1,63 +1,81 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 import pymongo
 import hashlib
+import re
+import datetime
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # The secret key is part of Falsk's security
+app.secret_key = 'your_secret_key_here'  # Change to a secret key in production
 
-# Connect to MongoDB 
+# Setting up MongoDB
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client['docpointify']
 
-# Collections
+# Here we define different collections (like tables in a database) for our data
 patients = db['patients']
-appointments = db['appointments'] # Deleted 'doctor' and ' assistant' users and united it to 'cabinet' since both users have the same roles
-
-# For now, we have one only cabinet, we may add more later
-cabinet = {
-    "cabinet_name": "cabinet",
-    "password": hashlib.sha256("default_password".encode()).hexdigest()
-}
+appointments = db['appointments']
+cabinets = db['cabinets']
 
 def hash_password(password):
-    """Turn the password into a hash for security"""
+    """Make the password safe by turning it into a hash"""
     return hashlib.sha256(password.encode()).hexdigest()
 
 @app.route('/')
 def home():
-    """Show the home page if logged in"""
+    """Show the home page if the user is logged in"""
     if 'cabinet_id' not in session:
-        return redirect(url_for('login'))
-    return render_template('home.html')
+        return redirect(url_for('login'))  # If not logged in, go to login page
+    return render_template('home.html')  # Show home page if logged in
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    """Create a new account for a cabinet"""
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        if cabinets.find_one({"email": email}):
+            flash('This email is already used. Please log in.', 'error')
+        else:
+            cabinets.insert_one({
+                "email": email,
+                "password": hash_password(password)
+            })
+            flash('Your account is created! Now log in.', 'success')
+            return redirect(url_for('login'))
+    return render_template('signup.html')  # Show sign up page if not POST
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """Handle login for the single cabinet"""
+    """Log in to the cabinet account"""
     if request.method == 'POST':
-        cabinet_name = request.form['cabinet_name']
+        email = request.form['email']
         password = request.form['password']
         hashed_password = hash_password(password)
 
-        if cabinet_name == cabinet['cabinet_name'] and hashed_password == cabinet['password']:
-            session['cabinet_id'] = "1"  # We use a dummy ID since there's only one cabinet
-            flash('Login successful!', 'success')
+        cabinet = cabinets.find_one({"email": email, "password": hashed_password})
+        if cabinet:
+            session['cabinet_id'] = str(cabinet['_id'])  # Save user ID in session
+            flash('You are logged in!', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Wrong Cabinet name or password.', 'error')
-    return render_template('login.html')
+            flash('Wrong email or password.', 'error')
+    return render_template('login.html')  # Show login page if not POST
 
 @app.route('/logout')
 def logout():
-    """Log out from the cabinet"""
+    """Log out the current user"""
     session.clear()
-    flash('Logged out.', 'success')
+    flash('You have logged out.', 'success')
     return redirect(url_for('login'))
 
 @app.route('/api/patients', methods=['GET', 'POST'])
 def manage_patients():
-    """Get or add patient data"""
+    """Manage patients - list all or add a new one"""
+    if 'cabinet_id' not in session:
+        return redirect(url_for('login'))  # Make sure user is logged in
     if request.method == 'GET':
-        all_patients = list(patients.find({}, {'_id': 0}))
+        all_patients = list(patients.find({}, {'_id': 0}))  # Get all patients, hide ID
         return jsonify({"patients": all_patients})
     else:  # POST
         new_patient = {
@@ -67,36 +85,60 @@ def manage_patients():
             "address": request.form['address'],
             "note": request.form['note']
         }
-        result = patients.insert_one(new_patient)
-        flash('Patient added!', 'success')
+        patients.insert_one(new_patient)
+        flash('New patient added!', 'success')
         return redirect(url_for('home'))
-    
+
 @app.route('/api/patients/<string:patient_id>', methods=['PUT', 'DELETE'])
 def update_or_delete_patient(patient_id):
-    """Update or delete a patient"""
+    """Update or delete a patient's information"""
+    if 'cabinet_id' not in session:
+        return redirect(url_for('login'))
     if request.method == 'PUT':
-        # Update patient
-        update_data = request.form  # Assuming all data comes from form
+        # Update patient info
+        update_data = request.form  # New data for the patient
         result = patients.update_one({"_id": patient_id}, {"$set": update_data})
         if result.modified_count > 0:
-            flash('Patient updated!', 'success')
+            flash('Patient information updated!', 'success')
         else:
-            flash('Patient not found or no changes made.', 'error')
+            flash('Patient not found or no updates made.', 'error')
         return redirect(url_for('home'))
     elif request.method == 'DELETE':
-        # Delete patient
+        # Remove patient
         result = patients.delete_one({"_id": patient_id})
         if result.deleted_count > 0:
-            flash('Patient deleted!', 'success')
+            flash('Patient removed!', 'success')
         else:
             flash('Patient not found.', 'error')
         return redirect(url_for('home'))
 
+@app.route('/api/patients/search', methods=['GET'])
+def search_patients():
+    """Search for patients by name or ID"""
+    if 'cabinet_id' not in session:
+        return redirect(url_for('login'))
+
+    search_query = request.args.get('q')  # Get search query from URL
+
+    if search_query:
+        # Use regex to search for patients by name (case-insensitive) or ID
+        regex = re.compile(search_query, re.IGNORECASE)
+        patients_found = list(patients.find({"$or": [
+            {"full_name": {"$regex": regex}}, 
+            {"_id": search_query} 
+        ]}))
+    else:
+        patients_found = []
+
+    return jsonify({"patients": patients_found})
+
 @app.route('/api/appointments', methods=['GET', 'POST'])
 def manage_appointments():
-    """Get or add appointment data"""
+    """Manage appointments - list all or add a new one"""
+    if 'cabinet_id' not in session:
+        return redirect(url_for('login'))  # Check user is logged in
     if request.method == 'GET':
-        all_appointments = list(appointments.find({}, {'_id': 0}))
+        all_appointments = list(appointments.find({}, {'_id': 0}))  # Get all appointments, hide ID
         return jsonify({"appointments": all_appointments})
     else:  # POST
         new_appointment = {
@@ -105,30 +147,59 @@ def manage_appointments():
             "time": request.form['time'],
             "notes": request.form['notes']
         }
+
+        # Check if this appointment time is already booked
+        if list(appointments.find({"date": new_appointment["date"], "time": new_appointment["time"]})):
+            flash("This appointment time is already taken.", "error")
+            return redirect(url_for('home'))
+
         appointments.insert_one(new_appointment)
         flash('Appointment added!', 'success')
         return redirect(url_for('home'))
-    
+
 @app.route('/api/appointments/<string:appointment_id>', methods=['PUT', 'DELETE'])
 def update_or_delete_appointment(appointment_id):
-    """Update or delete an appointment"""
+    """Update or cancel an appointment"""
+    if 'cabinet_id' not in session:
+        return redirect(url_for('login'))
     if request.method == 'PUT':
-        # Update appointment
+        # Update appointment details
         update_data = request.form
         result = appointments.update_one({"_id": appointment_id}, {"$set": update_data})
         if result.modified_count > 0:
             flash('Appointment updated!', 'success')
         else:
-            flash('Appointment not found or no changes made.', 'error')
+            flash('Appointment not found or no updates made.', 'error')
         return redirect(url_for('home'))
     elif request.method == 'DELETE':
-        # Delete appointment
+        # Cancel appointment
         result = appointments.delete_one({"_id": appointment_id})
         if result.deleted_count > 0:
-            flash('Appointment deleted!', 'success')
+            flash('Appointment cancelled!', 'success')
         else:
             flash('Appointment not found.', 'error')
         return redirect(url_for('home'))
+
+@app.route('/api/appointments/search', methods=['GET'])
+def search_appointments():
+    """Search for appointments by ID or date"""
+    if 'cabinet_id' not in session:
+        return redirect(url_for('login'))
+
+    search_query = request.args.get('q')  # Get search query from URL
+
+    if search_query:
+        try:
+            # Try to convert the search query to a date
+            search_date = datetime.datetime.strptime(search_query, "%Y-%m-%d")
+            appointments_found = list(appointments.find({"date": search_date}))
+        except ValueError:
+            # If it's not a date, assume it's an ID
+            appointments_found = list(appointments.find({"_id": search_query}))
+    else:
+        appointments_found = []
+
+    return jsonify({"appointments": appointments_found})
 
 if __name__ == '__main__':
     app.run(debug=True)
