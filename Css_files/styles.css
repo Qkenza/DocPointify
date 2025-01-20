@@ -16,15 +16,15 @@ body {
 }
 
 header {
-  background-color: #4cb1e8ec;
-  color: white;
+  background-color: #87c6e9ec;
+  color: rgb(213, 250, 243);
   padding: 20px 0;
 }
 
 header h1 {
   margin: 0;
-  padding-left: 20px;
-  font-size: 2.5rem;
+  padding-left: 80px;
+  font-size: 3rem;
   text-align: left;
   font-style: oblique;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -32,11 +32,12 @@ header h1 {
 
 /* Navigation */
 nav {
-  background: linear-gradient(45deg, #3498db, #2c3e50);
-  position: sticky;
+  background: linear-gradient(45deg, #58b0ec, #476889);
+  position:sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(159, 231, 202, 0.913);
+  border-radius: 10px;
 }
 
 nav ul {
