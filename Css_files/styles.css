@@ -63,19 +63,11 @@ nav ul li a:hover {
   transform: scale(1.1);
 }
 
-/* Add a subtle shadow on the navbar when hovering over links */
-nav ul li a:active {
-  text-shadow: 0 0 10px #ecf0f1, 0 0 20px #ecf0f1;
-}
 /* Enhanced Heading Styles */
 h2 {
   font-size: 3rem; /* Larger font size for a bold look */
   font-weight: 700; /* Bold weight for more impact */
-  background: linear-gradient(
-    45deg,
-    #2c3e50,
-    #3498db
-  ); /* Gradient from dark to light blue */
+  background: linear-gradient(45deg, #2c3e50, #3498db); /* Gradient from dark to light blue */
   background-clip: text;
   color: transparent;
   text-align: center;
@@ -123,27 +115,63 @@ h2::after {
   margin: auto;
 }
 
-/* Button Group (Home Page) */
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+/* Login and Signup Form Styles */
+.auth-container {
   margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
-button {
-  background-color: #4cd2cb;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  cursor: pointer;
-  font-size: 16px;
+.auth-container h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.auth-container input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
+}
+
+.auth-container button {
+  background-color: #43a39e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
-button:hover {
+.auth-container button:hover {
   background-color: #3c8dc3;
+}
+
+.auth-container p {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.auth-container p a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.auth-container p a:hover {
+  color: #1e6ea1;
 }
 
 /* Footer Styles */
@@ -168,71 +196,6 @@ footer p:hover {
   transform: scale(1.05);
 }
 
-/* Modal Styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  overflow: auto;
-}
-
-.modal-content {
-  background-color: white;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.modal-content button {
-  width: 100%;
-  background-color: #509e7e;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.modal-content button:hover {
-  background-color: #8abbdc;
-}
-
-/* Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover {
-  color: black;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   header h1 {
@@ -245,16 +208,6 @@ footer p:hover {
 
   .container {
     width: 90%;
-  }
-
-  .button-group {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  button {
-    width: 100%;
-    padding: 15px;
   }
 
   footer p {

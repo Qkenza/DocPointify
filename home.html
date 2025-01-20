@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - DocPointify</title>
+    <title>DocPointify</title>
     <link rel="stylesheet" href="Css_files/styles.css">
 </head>
 <body>
@@ -12,7 +12,6 @@
             <h1>DocPointify</h1>
             <nav>
                 <ul>
-                    <li><a href="home.html">Home</a></li>
                     <li><a href="appointments.html">Appointments</a></li>
                     <li><a href="patients.html">Patients</a></li>
                 </ul>
@@ -23,27 +22,15 @@
     <section class="section">
         <div class="container">
             <h2>Welcome to DocPointify</h2>
-            <div class="button-group">
-                <button id="doctorBtn">Doctor</button>
-                <button id="assistantBtn">Assistant</button>
+            <div class="auth-container">
+                <h3 id="authTitle">Login</h3>
+                <input type="email" id="email" placeholder="Enter Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button id="authSubmitBtn">Submit</button>
+                <p id="toggleText">New user? <a href="javascript:void(0)" id="toggleAuthMode">Register now</a></p>
             </div>
         </div>
     </section>
-
-    <!-- Modal for Authentication (Login or Signup) -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeAuthModal">&times;</span>
-            <h3 id="authTitle">Login</h3>
-            <!-- Authentication Form -->
-            <form id="authForm">
-                <input type="text" id="username" placeholder="Username" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit" id="authSubmitBtn">Login</button>
-            </form>
-            <p id="toggleText">Don't have an account? <a href="javascript:void(0)" id="toggleAuthMode">Sign Up</a></p>
-        </div>
-    </div>
 
     <footer>
         <div class="container">
