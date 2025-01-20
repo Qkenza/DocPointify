@@ -8,7 +8,7 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure the body is at least the height of the viewport */
+  min-height: 100vh;
   font-family: "Arial", sans-serif;
   background-color: #d9fcfccc;
   color: #333;
@@ -32,7 +32,7 @@ header h1 {
 
 /* Navigation */
 nav {
-  background: linear-gradient(45deg, #3498db, #2c3e50); /* Gradient background */
+  background: linear-gradient(45deg, #3498db, #2c3e50);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -45,8 +45,12 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 100px;
   padding: 15px 0;
+}
+
+nav ul li {
+  position: relative;
 }
 
 nav ul li a {
@@ -54,20 +58,28 @@ nav ul li a {
   color: white;
   font-weight: bold;
   font-size: 1.2rem;
-  letter-spacing: 1px;
+  padding: 8px 15px;
+  border-radius: 20px;
   transition: all 0.3s ease;
 }
 
 nav ul li a:hover {
-  color: #ecf0f1;
+  background-color: rgba(255, 255, 255, 0.2);
   transform: scale(1.1);
+}
+
+/* Active Link Highlight */
+nav ul li a.active {
+  background-color: #96f0ebd8;
+  color: #215566;
+  font-weight: bold;
 }
 
 /* Enhanced Heading Styles */
 h2 {
-  font-size: 3rem; /* Larger font size for a bold look */
-  font-weight: 700; /* Bold weight for more impact */
-  background: linear-gradient(45deg, #2c3e50, #3498db); /* Gradient from dark to light blue */
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #2c3e50, #3498db);
   background-clip: text;
   color: transparent;
   text-align: center;
@@ -115,7 +127,7 @@ h2::after {
   margin: auto;
 }
 
-/* Login and Signup Form Styles */
+/* Login and Signup Section */
 .auth-container {
   margin-top: 20px;
   padding: 20px;
@@ -176,7 +188,7 @@ h2::after {
 
 /* Footer Styles */
 footer {
-  background: linear-gradient(135deg, #4cb1e8ec, #3f5872); /* Gradient background */
+  background: linear-gradient(135deg, #4cb1e8ec, #3f5872);
   color: white;
   text-align: center;
   padding: 25px 0;
@@ -198,8 +210,9 @@ footer p:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  header h1 {
-    font-size: 1.5rem;
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .section {
