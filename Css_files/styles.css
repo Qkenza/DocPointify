@@ -16,8 +16,8 @@ body {
 }
 
 header {
-  background-color: #7dcbf594;
-  color: #54a2decf;
+  background-color: #6ac4f494;
+  color: color-mix(in srgb-linear, #02b25de3 60%, #6ac4f494 40%);
   padding: 15px 0;
 }
 
@@ -86,16 +86,6 @@ h2 {
   position: relative;
   margin-bottom: 30px;
 }
-h4 {
-  font-size: 3rem;
-  font-weight: 600;
-  background: linear-gradient(45deg, #1a8993, #2c8dca);
-  background-clip: text;
-  color: transparent;
-  text-align: center;
-  position: relative;
-  margin-bottom: 10px;
-}
 
 h2::after {
   content: "";
@@ -106,7 +96,7 @@ h2::after {
   position: absolute;
   bottom: 0;
   left: 0;
-  animation:underlineAnimation 10s ease-in-out;
+  animation: underlineAnimation 9s ease-in-out;
 }
 
 @keyframes underlineAnimation {
@@ -124,10 +114,21 @@ h2::after {
   }
 }
 
+h4 {
+  font-size: 3rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #1a8993, #2c8dca);
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
 /* Main Section Layout */
 .section {
   flex: 1;
-  padding: 40px 0;
+  padding: 10px 20px;
   text-align: center;
 }
 
@@ -201,13 +202,34 @@ h2::after {
 .auth-container p a:hover {
   color: #1e6ea1;
 }
+.button{
+  width: 10%;
+  padding: 10px;
+  background-color: #4cd2cb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.button:hover {
+  background-color: #3c8dc3;
+}
+
+.calendar{
+  border-radius: 30px;
+  border-style:ridge;
+  border-color:#19eb9a;
+  padding: 10px;
+}
 
 /* Footer Styles */
 footer {
   background: linear-gradient(135deg, #4cb1e8ec, #3f5872);
   color: white;
   text-align: center;
-  padding: 25px 0;
+  padding: 20px 0;
   margin-top: auto;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
 }
