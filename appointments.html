@@ -53,6 +53,39 @@
         font-weight: bold;
         display: block;
       }
+      #patientNameInput {
+        width: 100%;
+        padding: 8px;
+        font-size: 1em;
+        box-sizing: border-box;
+      }
+
+      #searchResults {
+        position: absolute;
+        width: 100%;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        display: none; /* Initially hidden */
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      #searchResults div {
+        padding: 8px;
+        cursor: pointer;
+        border-bottom: 1px solid #f1f1f1;
+      }
+
+      #searchResults div:hover {
+        background-color: #f0f0f0;
+      }
+
+      .form-container {
+        position: relative; /* Ensures #searchResults is positioned relative to this container */
+        margin-top: 10px;
+      }
     </style>
   </head>
   <body>
@@ -74,12 +107,15 @@
       <div class="container">
         <h4>Manage Appointments</h4>
         <form id="appointmentForm">
-          <input
-            type="text"
-            id="patientNameInput"
-            placeholder="Enter Patient's Name"
-            required
-          />
+          <div class="form-container">
+            <input
+              type="text"
+              id="patientNameInput"
+              placeholder="Enter or Search Patient's Name"
+              oninput="searchPatients()"
+            />
+            <div id="searchResults"></div>
+          </div>
           <input type="datetime-local" id="appointmentDateTime" required />
           <button class="button">Add Appointment</button>
         </form>
