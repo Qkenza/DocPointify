@@ -126,5 +126,46 @@ function showPatientInfo(patientName) {
   }
 }
 
+function searchPatients() {
+  const input = document.getElementById("patientNameInput").value.toLowerCase();
+  const searchResults = document.getElementById("searchResults");
+  const entries = JSON.parse(localStorage.getItem("entries")) || [];
+
+  // Clear previous search results
+  searchResults.innerHTML = "";
+
+  if (input.trim() === "") {
+    searchResults.style.display = "none";
+    return;
+  }
+
+  // Filter entries based on the input
+  const filteredEntries = entries.filter((entry) =>
+    entry.input1.toLowerCase().includes(input)
+  );
+
+  // Display the filtered results
+  if (filteredEntries.length > 0) {
+    filteredEntries.forEach((entry) => {
+      const resultItem = document.createElement("div");
+      resultItem.textContent = entry.input1; // Display patient name
+      resultItem.style.padding = "5px";
+      resultItem.style.cursor = "pointer";
+      resultItem.addEventListener("click", () => selectPatient(entry.input1));
+      searchResults.appendChild(resultItem);
+    });
+    searchResults.style.display = "block";
+  } else {
+    searchResults.style.display = "none";
+  }
+}
+
+// Function to select a patient from the search results
+function selectPatient(name) {
+  const patientNameInput = document.getElementById("patientNameInput");
+  patientNameInput.value = name;
+  document.getElementById("searchResults").style.display = "none";
+}
+
 // Attach event listener to the form
 document.getElementById("appointmentForm").onsubmit = addAppointment;
