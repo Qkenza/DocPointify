@@ -111,11 +111,11 @@ function showPatientInfo(patientName) {
   if (patient) {
     // Display patient information
     appointmentDisplay.innerHTML = `
-      <strong>Patient Name:</strong> ${patient.input1}<br>
-      <strong>Phone:</strong> ${patient.input2}<br>
+      <strong>Patient Name:</strong> ${patient.input1}
+      <strong>Phone:</strong> ${patient.input2}
       <strong>Address:</strong> ${patient.input3}<br>
-      <strong>Note:</strong> ${patient.input4}<br>
-      <strong>ID:</strong> ${patient.input5}<br>
+      <strong>Note:</strong> ${patient.input4}
+      <strong>ID:</strong> ${patient.id || "Not Available"}<br>
     `;
   } else {
     // If no patient information is found
