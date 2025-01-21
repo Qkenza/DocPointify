@@ -1,7 +1,9 @@
+// Initialize the calendar on page load
 window.onload = function () {
   initializeCalendar();
 };
 
+// Function to add an appointment
 function addAppointment(event) {
   event.preventDefault();
 
@@ -20,6 +22,7 @@ function addAppointment(event) {
     name: patientName,
     dateTime: appointmentDateTime,
   };
+
   let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
   appointments.push(newAppointment);
   localStorage.setItem("appointments", JSON.stringify(appointments));
@@ -28,6 +31,7 @@ function addAppointment(event) {
   document.getElementById("appointmentForm").reset();
 }
 
+// Function to delete an appointment
 function deleteAppointment(appointmentId, event) {
   event.stopPropagation();
 
@@ -39,6 +43,7 @@ function deleteAppointment(appointmentId, event) {
   initializeCalendar();
 }
 
+// Function to format time for display
 function formatTime(date) {
   return new Date(date).toLocaleTimeString([], {
     hour: "2-digit",
@@ -46,6 +51,7 @@ function formatTime(date) {
   });
 }
 
+// Function to initialize the calendar
 function initializeCalendar() {
   const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
 
@@ -70,7 +76,12 @@ function initializeCalendar() {
         html: `
           <div class="appointment-container">
             <div class="appointment-info">
-              <span class="appointment-name">${arg.event.title}</span>
+              <span class="appointment-name" 
+                onclick="showPatientInfo('${arg.event.title}')"
+                style="cursor: pointer; color: blue; text-decoration: underline;"
+              >
+                ${arg.event.title}
+              </span>
               <span class="appointment-time">${time}</span>
             </div>
             <button 
@@ -87,4 +98,33 @@ function initializeCalendar() {
   calendar.render();
 }
 
+// Function to display patient information
+function showPatientInfo(patientName) {
+  const appointmentDisplay = document.getElementById("appointmentDisplay");
+  const entries = JSON.parse(localStorage.getItem("entries")) || [];
+
+  // Find the patient in local storage
+  const patient = entries.find(
+    (entry) => entry.input1.toLowerCase() === patientName.toLowerCase()
+  );
+
+  if (patient) {
+    // Display patient information
+    appointmentDisplay.innerHTML = `
+      <strong>Patient Name:</strong> ${patient.input1}<br>
+      <strong>Phone:</strong> ${patient.input2}<br>
+      <strong>Address:</strong> ${patient.input3}<br>
+      <strong>Note:</strong> ${patient.input4}<br>
+      <strong>ID:</strong> ${patient.input5}<br>
+    `;
+  } else {
+    // If no patient information is found
+    appointmentDisplay.innerHTML = `
+      <strong>Patient Name:</strong> ${patientName}<br>
+      <em>No additional information found for this patient.</em>
+    `;
+  }
+}
+
+// Attach event listener to the form
 document.getElementById("appointmentForm").onsubmit = addAppointment;
