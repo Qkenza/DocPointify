@@ -220,12 +220,32 @@ h4 {
 #message {
   font-size: 1rem;
   font-weight: bold;
-  color: red; /* Default for error messages */
+  color: red;
   transition: all 0.3s ease;
 }
 
 #message.success {
-  color: green; /* For success messages */
+  color: green;
+}
+
+
+#logoutNav {
+  display: inline; /* Shown dynamically via JavaScript */
+}
+
+#logoutNav a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 8px 15px;
+  border-radius: 20px;
+  background-color: #dad7d08b;
+  transition: all 0.3s ease;
+}
+
+#logoutNav a:hover {
+  background-color: #fa4444ab;
 }
 
 .calendar{

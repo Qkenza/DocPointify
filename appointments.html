@@ -95,8 +95,9 @@
         <nav>
           <ul>
             <li><a href="home.html">Home</a></li>
-            <li><a href="appointments.html" class="active">Appointments</a></li>
-            <li><a href="patients.html">Patients</a></li>
+            <li><a href="appointments.html" class="restricted" class="active">Appointments</a></li>
+            <li><a href="patients.html" class="restricted">Patients</a></li>
+            <li id="logoutNav" style="display: none;"><a href="javascript:void(0)" id="logoutBtn">Logout</a></li>
           </ul>
         </nav>
       </div>
@@ -131,5 +132,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="Js_files/appointments.js"></script>
+    <script src="Js_files/script.js"></script>
   </body>
 </html>
