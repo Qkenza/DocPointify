@@ -116,4 +116,12 @@ function filterInfo() {
     `;
     tableBody.appendChild(row);
   });
+
+  // Toggle form visibility based on search input
+  const formContainer = document.querySelector(".form-container");
+  if (query.trim() !== "") {
+    formContainer.style.display = "none";
+  } else {
+    formContainer.style.display = "block";
+  }
 }
