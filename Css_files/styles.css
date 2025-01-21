@@ -217,6 +217,17 @@ h4 {
   background-color: #3c8dc3;
 }
 
+#message {
+  font-size: 1rem;
+  font-weight: bold;
+  color: red; /* Default for error messages */
+  transition: all 0.3s ease;
+}
+
+#message.success {
+  color: green; /* For success messages */
+}
+
 .calendar{
   border-radius: 30px;
   border-style:ridge;
