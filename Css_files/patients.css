@@ -5,7 +5,7 @@ h3 {
   color: #1a679b;
 }
 .background-patients{
-  
+  background: url('../images/background5.jpg') no-repeat center center/cover;
 }
 .search-container {
   text-align: center;
