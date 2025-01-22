@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import hashlib
 import re
 import datetime
-from models import Patients, Appointments # Import the models from 
+from models import patients, appointments # Import the models from 
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  
