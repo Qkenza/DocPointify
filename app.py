@@ -1,74 +1,89 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
-import pymongo
+from pymongo import MongoClient
 import hashlib
 import re
 import datetime
+from models import Patients, Appointments # Import the models from 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Change to a secret key in production
+app.secret_key = 'your_secret_key_here'  
 
 # Setting up MongoDB
-client = pymongo.MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb://localhost:27017/")
 db = client['docpointify']
 
-# Here we define different collections (like tables in a database) for our data
+# MongoDB Collections
 patients = db['patients']
 appointments = db['appointments']
-cabinets = db['cabinets']
+users = db['users'] # Collection for user data
 
+# Simple password hashing function
 def hash_password(password):
     """Make the password safe by turning it into a hash"""
     return hashlib.sha256(password.encode()).hexdigest()
 
+# Home route: Redirects to login or appointments page based on session
 @app.route('/')
 def home():
-    """Show the home page if the user is logged in"""
-    if 'cabinet_id' not in session:
-        return redirect(url_for('login'))  # If not logged in, go to login page
-    return render_template('home.html')  # Show home page if logged in
+    """Redirect to login or appointments page based on session"""
+    if not is_logged_in():
+        return redirect(url_for('login'))  # Redirect to login if not logged in
+    return redirect(url_for('appointments_page'))  # Redirect to appointments page if logged in
 
+def is_logged_in():
+    """Check if the user is logged in by checking if 'user_id' is in session"""
+    return 'user_id' in session
+
+# Sign-up route: Allows users to create an account
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    """Create a new account for a cabinet"""
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        if cabinets.find_one({"email": email}):
-            flash('This email is already used. Please log in.', 'error')
-        else:
-            cabinets.insert_one({
-                "email": email,
-                "password": hash_password(password)
-            })
-            flash('Your account is created! Now log in.', 'success')
-            return redirect(url_for('login'))
-    return render_template('signup.html')  # Show sign up page if not POST
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    """Log in to the cabinet account"""
+    """Register a new user account"""
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
         hashed_password = hash_password(password)
 
-        cabinet = cabinets.find_one({"email": email, "password": hashed_password})
-        if cabinet:
-            session['cabinet_id'] = str(cabinet['_id'])  # Save user ID in session
-            flash('You are logged in!', 'success')
-            return redirect(url_for('home'))
+        # Check if email is already in use
+        if users.find_one({"email": email}):
+            flash('This email is already used. Please log in.', 'error')
         else:
-            flash('Wrong email or password.', 'error')
-    return render_template('login.html')  # Show login page if not POST
+            # Insert the new user into the database
+            users.insert_one({
+                "email": email,
+                "password": hashed_password
+            })
+            flash('Your account has been created! You can now log in.', 'success')
+            return redirect(url_for('login'))
+    return render_template('signup.html')  # Render sign-up form if not POST
 
+# Login route: Allows users to log into their account
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Log in to the user account"""
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        hashed_password = hash_password(password)  # Hash the password before comparing
+
+        user = users.find_one({"email": email})
+        if user and user['password'] == hashed_password:  # Check email and password
+            session['user_id'] = email  # Store email as user ID in session
+            flash('You are logged in!', 'success')
+            return redirect(url_for('appointments'))  # Redirect to the appointments page
+        else:
+            flash('Wrong email or password.', 'error')  # Flash an error message if login fails
+    return render_template('login.html')  # Render login page if not POST
+
+
+# Logout route: Logs out the current user by clearing the session
 @app.route('/logout')
 def logout():
     """Log out the current user"""
-    session.clear()
+    session.clear()  # Clear all session data
     flash('You have logged out.', 'success')
-    return redirect(url_for('login'))
-
+    return redirect(url_for('login'))  # Redirect to the login page after logout
+ 
+ # Patients Management routes
 @app.route('/api/patients', methods=['GET', 'POST'])
 def manage_patients():
     """Manage patients - list all or add a new one"""
@@ -132,6 +147,7 @@ def search_patients():
 
     return jsonify({"patients": patients_found})
 
+# Appointments Management routes
 @app.route('/api/appointments', methods=['GET', 'POST'])
 def manage_appointments():
     """Manage appointments - list all or add a new one"""
