@@ -11,109 +11,96 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleText = document.getElementById('toggleText');
 
     // Show or hide the logout button based on login state
-    if (isLoggedIn && logoutNav) {
+    if (isLoggedIn) {
         logoutNav.style.display = "inline";
-    } else if (logoutNav) {
+    } else {
         logoutNav.style.display = "none";
     }
 
     // Handle logout
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('isLoggedIn'); // Clear login state
-            if (authMessage) {
-                authMessage.textContent = "You have logged out successfully.";
-                authMessage.style.color = "green";
-            }
-            setTimeout(() => {
-                window.location.href = "home.html"; // Redirect to the home page
-            }, 1500);
-        });
-    }
+    logoutBtn?.addEventListener('click', () => {
+        localStorage.removeItem('isLoggedIn'); // Clear login state
+        showMessage('You have logged out successfully.', 'green');
+        setTimeout(() => {
+            window.location.href = "home.html"; // Redirect to the home page
+        }, 1500);
+    });
 
     // Restrict access to protected pages
     const restrictedLinks = document.querySelectorAll('.restricted');
     if (!isLoggedIn) {
-        restrictedLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
+        restrictedLinks.forEach(link =>
+            link.addEventListener('click', e => {
                 e.preventDefault(); // Prevent navigation
-                if (authMessage) {
-                    authMessage.textContent = "You must log in to access this page.";
-                    authMessage.style.color = "red";
-                }
+                showMessage('You must log in to access this page.', 'red');
                 setTimeout(() => {
                     window.location.href = "home.html"; // Redirect to home
                 }, 1500);
-            });
-        });
+            })
+        );
     }
 
-    // Login/Register form functionality
+    // Toggle between login and register modes
     let isLoginMode = true;
+    toggleText?.addEventListener('click', () => {
+        isLoginMode = !isLoginMode;
 
-    if (toggleText) {
-        toggleText.addEventListener('click', () => {
-            isLoginMode = !isLoginMode;
+        authTitle.textContent = isLoginMode ? "Login" : "Sign Up";
+        authSubmitBtn.textContent = isLoginMode ? "Submit" : "Register";
+        toggleText.innerHTML = isLoginMode
+            ? `New user? <a href='javascript:void(0)'>Register now</a>`
+            : `Already have an account? <a href='javascript:void(0)'>Login</a>`;
+        clearMessage();
+    });
 
-            if (isLoginMode) {
-                authTitle.textContent = "Login";
-                authSubmitBtn.textContent = "Submit";
-                toggleText.innerHTML = "New user? <a href='javascript:void(0)'>Register now</a>";
+    // Handle login or register
+    authSubmitBtn?.addEventListener('click', () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!email || !password) {
+            showMessage('Please fill in all fields.', 'red');
+            return;
+        }
+
+        if (isLoginMode) {
+            // Login logic
+            const storedEmail = localStorage.getItem('email');
+            const storedPassword = localStorage.getItem('password');
+
+            if (email === storedEmail && password === storedPassword) {
+                localStorage.setItem('isLoggedIn', true);
+                showMessage('Welcome! Connected successfully.', 'green');
+                setTimeout(() => {
+                    window.location.href = "appointments.html"; // Redirect to appointments
+                }, 1500);
             } else {
-                authTitle.textContent = "Sign Up";
-                authSubmitBtn.textContent = "Register";
-                toggleText.innerHTML = "Already have an account? <a href='javascript:void(0)'>Login</a>";
+                showMessage('No user with this email registered yet.', 'red');
             }
-            if (authMessage) authMessage.textContent = ""; // Clear any existing messages
-        });
-    }
+        } else {
+            // Register logic
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+            showMessage('Signup successful! Please log in.', 'green');
+            isLoginMode = true; // Switch to login mode
+            authTitle.textContent = "Login";
+            authSubmitBtn.textContent = "Submit";
+            toggleText.innerHTML = `New user? <a href='javascript:void(0)'>Register now</a>`;
+        }
+    });
 
-    if (authSubmitBtn) {
-        authSubmitBtn.addEventListener('click', () => {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
+    // Utility function to show messages
+    const showMessage = (msg, color) => {
+        if (authMessage) {
+            authMessage.textContent = msg;
+            authMessage.style.color = color;
+            authMessage.style.textAlign = 'center'; // Center-align message
+            authMessage.style.marginTop = '20px';
+        }
+    };
 
-            if (!email || !password) {
-                if (authMessage) {
-                    authMessage.textContent = "Please fill in all fields.";
-                    authMessage.style.color = "red";
-                }
-                return;
-            }
-
-            if (isLoginMode) {
-                // Login logic
-                const storedEmail = localStorage.getItem('email');
-                const storedPassword = localStorage.getItem('password');
-
-                if (email === storedEmail && password === storedPassword) {
-                    localStorage.setItem('isLoggedIn', true);
-                    if (authMessage) {
-                        authMessage.textContent = "Welcome! Connected successfully.";
-                        authMessage.style.color = "green";
-                    }
-                    setTimeout(() => {
-                        window.location.href = "appointments.html"; // Redirect to appointments
-                    }, 1500);
-                } else {
-                    if (authMessage) {
-                        authMessage.textContent = "No user with this email registered yet.";
-                        authMessage.style.color = "red";
-                    }
-                }
-            } else {
-                // Register logic
-                localStorage.setItem('email', email);
-                localStorage.setItem('password', password);
-                if (authMessage) {
-                    authMessage.textContent = "Signup successful! Please log in.";
-                    authMessage.style.color = "green";
-                }
-                isLoginMode = true; // Switch to login mode
-                authTitle.textContent = "Login";
-                authSubmitBtn.textContent = "Submit";
-                toggleText.innerHTML = "New user? <a href='javascript:void(0)'>Register now</a>";
-            }
-        });
-    }
+    // Utility function to clear messages
+    const clearMessage = () => {
+        if (authMessage) authMessage.textContent = '';
+    };
 });
