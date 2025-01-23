@@ -21,3 +21,19 @@ class Appointment(db.Model):
             'name': self.name,
             'dateTime': self.date_time.isoformat()
         }
+    
+class Entry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    input1 = db.Column(db.String(200), nullable=False)
+    input2 = db.Column(db.String(200), nullable=False)
+    input3 = db.Column(db.String(200), nullable=False)
+    input4 = db.Column(db.String(200), nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'input1': self.input1,
+            'input2': self.input2,
+            'input3': self.input3,
+            'input4': self.input4
+        }
