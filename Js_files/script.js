@@ -21,8 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('isLoggedIn'); // Clear login state
-            alert("You have logged out successfully.");
-            window.location.href = "home.html"; // Redirect to the home page
+            if (authMessage) {
+                authMessage.textContent = "You have logged out successfully.";
+                authMessage.style.color = "green";
+            }
+            setTimeout(() => {
+                window.location.href = "home.html"; // Redirect to the home page
+            }, 1500);
         });
     }
 
@@ -32,8 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
         restrictedLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault(); // Prevent navigation
-                alert("You must log in to access this page.");
-                window.location.href = "home.html"; // Redirect to home
+                if (authMessage) {
+                    authMessage.textContent = "You must log in to access this page.";
+                    authMessage.style.color = "red";
+                }
+                setTimeout(() => {
+                    window.location.href = "home.html"; // Redirect to home
+                }, 1500);
             });
         });
     }
