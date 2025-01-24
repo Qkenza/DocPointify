@@ -1,46 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DocPointify</title>
-    <link rel="stylesheet" href="static/css_files/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/css_files/styles.css" />
+  </head>
+  <body>
     <header>
-        <div class="container">
-            <h1>DocPointify</h1>
-            <nav>
-                <ul>
-                    <li><a href="appointments.html" class="restricted">Appointments</a></li>
-                    <li><a href="patients.html" class="restricted">Patients</a></li>
-                    <li id="logoutNav" style="display: none;"><a href="javascript:void(0)" id="logoutBtn">Logout</a></li>
-                </ul>
-            </nav>
-        </div>
+      <div class="container">
+        <h1>DocPointify</h1>
+        <nav>
+          <ul>
+            <li>
+              <a href="appointments.html" class="restricted">Appointments</a>
+            </li>
+            <li><a href="patients.html" class="restricted">Patients</a></li>
+            <li id="logoutNav" style="display: none">
+              <a href="javascript:void(0)" id="logoutBtn">Logout</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <section class="section">
-        <div class="container">
-            <h2>Welcome to DocPointify</h2>
-            <!-- display messages -->
-            <div id="authMessage" style="text-align: center; color: red; margin-bottom: 20px;"></div>
-            <div class="auth-container">
-                <h3 id="authTitle">Login</h3>
-                <input type="email" id="email" placeholder="Enter Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button id="authSubmitBtn">Submit</button>
-                <p id="toggleText">New user? <a href="javascript:void(0)" id="toggleAuthMode">Register now</a></p>
-            </div>
+      <div class="container">
+        <h2>Welcome to DocPointify</h2>
+        <!-- display messages -->
+        <div
+          id="authMessage"
+          style="text-align: center; color: red; margin-bottom: 20px"
+        ></div>
+        <div class="auth-container">
+          <h3 id="authTitle">Login</h3>
+          <input type="email" id="email" placeholder="Enter Email" required />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <button id="authSubmitBtn">Submit</button>
+          <p id="toggleText">
+            New user?
+            <a href="javascript:void(0)" id="toggleAuthMode">Register now</a>
+          </p>
         </div>
+      </div>
     </section>
-    
+
     <footer>
-        <div class="container">
-            <p>&copy; 2025 DocPointify</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2025 DocPointify</p>
+      </div>
     </footer>
 
-    <script src="static/js_files/script.js"></script>
-</body>
+    <script src="../static/js_files/script.js"></script>
+  </body>
 </html>
