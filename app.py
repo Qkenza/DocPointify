@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///entries.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
- 
+
 # Add this to the existing Appointment model section
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +62,12 @@ def add_entry():
     db.session.add(new_entry)
     db.session.commit()
     return jsonify(new_entry.to_dict()), 201
+
+@app.route('/entries/<int:entry_id>', methods=['GET'])
+def get_entry(entry_id):
+    # Retrieve a single entry by ID
+    entry = Entry.query.get_or_404(entry_id)
+    return jsonify(entry.to_dict())
 
 @app.route('/entries/<int:entry_id>', methods=['PUT'])
 def update_entry(entry_id):
