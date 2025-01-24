@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///entries.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
-
+ 
 # Add this to the existing Appointment model section
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
