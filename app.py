@@ -96,12 +96,6 @@ def get_appointments():
     appointments = Appointment.query.all()
     return jsonify([appointment.to_dict() for appointment in appointments])
 
-@app.route('/appointments', methods=['GET'])
-def get_appointments():
-    # Retrieve all appointments and return them as JSON
-    appointments = Appointment.query.all()
-    return jsonify([appointment.to_dict() for appointment in appointments])
-
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
     # Create a new appointment
