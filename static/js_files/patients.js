@@ -17,7 +17,13 @@ function validateForm() {
   });
 
   if (valid) {
-    addInfo();
+    // Check if we're in edit mode
+    const editingId = document.getElementById("editingId").value;
+    if (editingId) {
+      updateInfo(parseInt(editingId));
+    } else {
+      addInfo();
+    }
   }
   return false;
 }
@@ -47,6 +53,32 @@ async function addInfo() {
   }
 }
 
+// Update existing information
+async function updateInfo(id) {
+  const input1 = document.getElementById("input1").value;
+  const input2 = document.getElementById("input2").value;
+  const input3 = document.getElementById("input3").value;
+  const input4 = document.getElementById("input4").value;
+
+  try {
+    const response = await fetch(`http://127.0.0.1:5000/entries/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ input1, input2, input3, input4 }),
+    });
+
+    if (response.ok) {
+      loadTableData();
+      document.getElementById("infoForm").reset();
+      document.getElementById("editingId").value = ""; // Clear editing ID
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
 // Load table data from server
 async function loadTableData() {
   try {
@@ -58,16 +90,16 @@ async function loadTableData() {
     entries.forEach((entry, index) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-                    <td>${entry.input1}</td>
-                    <td>${entry.input2}</td>
-                    <td>${entry.input3}</td>
-                    <td>${entry.input4}</td>
-                    <td>${entry.id}</td>
-                    <td>
-                        <button class="edit-btn" onclick="editInfo(${entry.id})">Edit</button>
-                        <button class="delete-btn" onclick="deleteInfo(${entry.id})">Delete</button>
-                    </td>
-                `;
+        <td>${entry.input1}</td>
+        <td>${entry.input2}</td>
+        <td>${entry.input3}</td>
+        <td>${entry.input4}</td>
+        <td>${entry.id}</td>
+        <td>
+          <button class="edit-btn" onclick="editInfo(${entry.id})">Edit</button>
+          <button class="delete-btn" onclick="deleteInfo(${entry.id})">Delete</button>
+        </td>
+      `;
       tableBody.appendChild(row);
     });
   } catch (error) {
@@ -86,8 +118,8 @@ async function editInfo(id) {
     document.getElementById("input3").value = entry.input3;
     document.getElementById("input4").value = entry.input4;
 
-    // Delete the original entry
-    await deleteInfo(id);
+    // Store the ID of the entry being edited
+    document.getElementById("editingId").value = entry.id;
   } catch (error) {
     console.error("Error:", error);
   }
@@ -124,16 +156,16 @@ async function filterInfo() {
     filteredEntries.forEach((entry) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-                    <td>${entry.input1}</td>
-                    <td>${entry.input2}</td>
-                    <td>${entry.input3}</td>
-                    <td>${entry.input4}</td>
-                    <td>${entry.id}</td>
-                    <td>
-                        <button class="edit-btn" onclick="editInfo(${entry.id})">Edit</button>
-                        <button class="delete-btn" onclick="deleteInfo(${entry.id})">Delete</button>
-                    </td>
-                `;
+        <td>${entry.input1}</td>
+        <td>${entry.input2}</td>
+        <td>${entry.input3}</td>
+        <td>${entry.input4}</td>
+        <td>${entry.id}</td>
+        <td>
+          <button class="edit-btn" onclick="editInfo(${entry.id})">Edit</button>
+          <button class="delete-btn" onclick="deleteInfo(${entry.id})">Delete</button>
+        </td>
+      `;
       tableBody.appendChild(row);
     });
 
