@@ -1,12 +1,8 @@
-window.onload = function () {
-  loadTableData();
-};
-
 // Validate the form on submit
 function validateForm() {
   let valid = true;
-
   const inputs = ["input1", "input2", "input3", "input4"];
+
   inputs.forEach(function (inputId, index) {
     const input = document.getElementById(inputId);
     const errorSpan = document.getElementById("error" + (index + 1));
@@ -26,102 +22,128 @@ function validateForm() {
   return false;
 }
 
-// Add information to localStorage
-function addInfo() {
+// Add information to server
+async function addInfo() {
   const input1 = document.getElementById("input1").value;
   const input2 = document.getElementById("input2").value;
   const input3 = document.getElementById("input3").value;
   const input4 = document.getElementById("input4").value;
 
-  // Generate a unique ID
-  const entries = JSON.parse(localStorage.getItem("entries")) || [];
-  const newId = entries.length > 0 ? entries[entries.length - 1].id + 1 : 1;
+  try {
+    const response = await fetch("http://127.0.0.1:5000/entries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ input1, input2, input3, input4 }),
+    });
 
-  const newEntry = { id: newId, input1, input2, input3, input4 };
-  entries.push(newEntry);
-  localStorage.setItem("entries", JSON.stringify(entries));
-  loadTableData();
-
-  // Reset form
-  document.getElementById("infoForm").reset();
+    if (response.ok) {
+      loadTableData();
+      document.getElementById("infoForm").reset();
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-// Load table data from localStorage
-function loadTableData() {
-  const entries = JSON.parse(localStorage.getItem("entries")) || [];
-  const tableBody = document.querySelector("#infoTable tbody");
-  tableBody.innerHTML = "";
+// Load table data from server
+async function loadTableData() {
+  try {
+    const response = await fetch("http://127.0.0.1:5000/entries");
+    const entries = await response.json();
+    const tableBody = document.querySelector("#infoTable tbody");
+    tableBody.innerHTML = "";
 
-  entries.forEach((entry, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${entry.input1}</td>
-      <td>${entry.input2}</td>
-      <td>${entry.input3}</td>
-      <td>${entry.input4}</td>
-      <td>${entry.id}</td>
-      <td>
-        <button class="edit-btn" onclick="editInfo(${index})">Edit</button>
-        <button class="delete-btn" onclick="deleteInfo(${index})">Delete</button>
-      </td>
-    `;
-    tableBody.appendChild(row);
-  });
+    entries.forEach((entry, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                    <td>${entry.input1}</td>
+                    <td>${entry.input2}</td>
+                    <td>${entry.input3}</td>
+                    <td>${entry.input4}</td>
+                    <td>${entry.id}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editInfo(${entry.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteInfo(${entry.id})">Delete</button>
+                    </td>
+                `;
+      tableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 // Edit information
-function editInfo(index) {
-  const entries = JSON.parse(localStorage.getItem("entries"));
-  const entry = entries[index];
-  document.getElementById("input1").value = entry.input1;
-  document.getElementById("input2").value = entry.input2;
-  document.getElementById("input3").value = entry.input3;
-  document.getElementById("input4").value = entry.input4;
+async function editInfo(id) {
+  try {
+    const response = await fetch(`http://127.0.0.1:5000/entries/${id}`);
+    const entry = await response.json();
 
-  // Remove entry to avoid duplication
-  deleteInfo(index);
+    document.getElementById("input1").value = entry.input1;
+    document.getElementById("input2").value = entry.input2;
+    document.getElementById("input3").value = entry.input3;
+    document.getElementById("input4").value = entry.input4;
+
+    // Delete the original entry
+    await deleteInfo(id);
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 // Delete information
-function deleteInfo(index) {
-  let entries = JSON.parse(localStorage.getItem("entries"));
-  entries.splice(index, 1);
-  localStorage.setItem("entries", JSON.stringify(entries));
-  loadTableData();
-}
+async function deleteInfo(id) {
+  try {
+    const response = await fetch(`http://127.0.0.1:5000/entries/${id}`, {
+      method: "DELETE",
+    });
 
-// Filter patients
-function filterInfo() {
-  const query = document.getElementById("searchPatient").value.toLowerCase();
-  const entries = JSON.parse(localStorage.getItem("entries")) || [];
-  const filteredEntries = entries.filter((entry) =>
-    entry.input1.toLowerCase().includes(query)
-  );
-
-  const tableBody = document.querySelector("#infoTable tbody");
-  tableBody.innerHTML = "";
-
-  filteredEntries.forEach((entry, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${entry.input1}</td>
-      <td>${entry.input2}</td>
-      <td>${entry.input3}</td>
-      <td>${entry.input4}</td>
-      <td>${entry.id}</td>
-      <td>
-        <button class="edit-btn" onclick="editInfo(${index})">Edit</button>
-        <button class="delete-btn" onclick="deleteInfo(${index})">Delete</button>
-      </td>
-    `;
-    tableBody.appendChild(row);
-  });
-
-  // Toggle form visibility based on search input
-  const formContainer = document.querySelector(".form-container");
-  if (query.trim() !== "") {
-    formContainer.style.display = "none";
-  } else {
-    formContainer.style.display = "block";
+    if (response.ok) {
+      loadTableData();
+    }
+  } catch (error) {
+    console.error("Error:", error);
   }
 }
+
+// Filter entries
+async function filterInfo() {
+  const query = document.getElementById("searchPatient").value.toLowerCase();
+
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:5000/entries/search?q=${query}`
+    );
+    const filteredEntries = await response.json();
+
+    const tableBody = document.querySelector("#infoTable tbody");
+    tableBody.innerHTML = "";
+
+    filteredEntries.forEach((entry) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                    <td>${entry.input1}</td>
+                    <td>${entry.input2}</td>
+                    <td>${entry.input3}</td>
+                    <td>${entry.input4}</td>
+                    <td>${entry.id}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editInfo(${entry.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteInfo(${entry.id})">Delete</button>
+                    </td>
+                `;
+      tableBody.appendChild(row);
+    });
+
+    // Toggle form visibility based on search input
+    const formContainer = document.querySelector(".form-container");
+    formContainer.style.display = query.trim() !== "" ? "none" : "block";
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Load data on page load
+window.onload = loadTableData;
