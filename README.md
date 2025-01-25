@@ -2,7 +2,8 @@
 
 ## Description :
 
-DocPointify is a web-based application designed to streamline patient and appointment management for doctors and their cabinet staff or assistant. it works like an online calendar, a virtual agenda, enabling efficient handling of patient information and appointments in a user-friendly interface. it allows users to add, update, delete, and search through patient records and appointments.
+DocPointify is a modern, web-based application designed to streamline the management of patient appointments for healthcare providers. This platform enables doctors and their assistants to securely log in, organize appointments, and manage patient information efficiently.​
+DocPointify aims to simplify repetitive daily operations, reduce administrative burden, and enhance the overall workflow of healthcare professionals. By providing an intuitive interface and robust features, the application empowers medical staff to focus more on patient care and less on paperwork.​
 
 ## Table of Content :
 
@@ -31,6 +32,7 @@ DocPointify is a web-based application designed to streamline patient and appoin
 3. **User Roles** : 
    - Secure login system for users.
    - Session-based authentication for access to the app.
+   - Restriction of integrating pages before login
 
    
 ## Technologies Used :
@@ -92,10 +94,7 @@ To see the project in action, follow these steps:
    python app.py
    ```
 
-5. **Verify the API**
-   - Once the application is running, check the terminal to ensure the API is functioning correctly.
-
-6. **View the Project in Browser**
+5. **View the Project in Browser**
    - Navigate to the `Templates` directory, open the **home.html** file in Visual Studio Code, and go live.
    - The project should now be accessible in your browser!
 
