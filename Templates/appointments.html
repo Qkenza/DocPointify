@@ -42,34 +42,37 @@
       }
       .appointment-info {
         flex-grow: 1;
-        margin-right: 5px;
+        margin-right: 3px;
         font-size: 0.9em;
+        color: #6ac4f494;
       }
       .appointment-time {
-        color: #666;
-        font-size: 0.8em;
+        color: #1ba167c8;
+        font-size: 10px;
       }
       .appointment-name {
         font-weight: bold;
         display: block;
       }
       #patientNameInput {
-        width: 100%;
+        width: 50%;
         padding: 8px;
         font-size: 1em;
         box-sizing: border-box;
       }
 
       #searchResults {
-        position: absolute;
-        width: 100%;
+        position:absolute;
+        width:50%;
         background-color: #ffffff;
         border: 1px solid #ccc;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 10;
         display: none; /* Initially hidden */
         max-height: 200px;
-        overflow-y: auto;
+        overflow-y:auto;
+        top: 100%; /* Positions the dropdown just below the input */
+        left: 25%; /* Aligns the dropdown with the left side of the input */
       }
 
       #searchResults div {
@@ -82,6 +85,17 @@
         background-color: #f0f0f0;
       }
 
+      #appointmentDateTime{
+        font-size: 20px;
+        font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        color: color-mix(in srgb-linear, #0d7141e3 60%, #6ac4f494 40%);
+        font-weight: bold;
+        text-align: center;
+        width:auto;
+        padding: 10px;
+        margin: 10px;
+      }
+      
       .form-container {
         position: relative; /* Ensures #searchResults is positioned relative to this container */
         margin-top: 10px;
