@@ -2,12 +2,54 @@ from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///entries.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
+
+# User model to store email and password
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(200), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email
+        }
+
+# Register route for new users
+@app.route('/register', methods=['POST'])
+def register_user():
+    data = request.json
+    email = data['email']
+    password = data['password']
+
+    # Check if user already exists
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "User with this email already exists"}), 400
+    
+    new_user = User(email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "User registered successfully"}), 201
+
+# Login route for users
+@app.route('/login', methods=['POST'])
+def login_user():
+    data = request.json
+    email = data['email']
+    password = data['password']
+    
+    user = User.query.filter_by(email=email, password=password).first()
+    if user:
+        return jsonify({"message": "Login successful", "user": user.to_dict()}), 200
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
 
 # Add this to the existing Appointment model section
 class Appointment(db.Model):

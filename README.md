@@ -3,6 +3,7 @@
 ## Description :
 
 DocPointify is a modern, web-based application designed to streamline the management of patient appointments for healthcare providers. This platform enables doctors and their assistants to securely log in, organize appointments, and manage patient information efficiently.​
+
 DocPointify aims to simplify repetitive daily operations, reduce administrative burden, and enhance the overall workflow of healthcare professionals. By providing an intuitive interface and robust features, the application empowers medical staff to focus more on patient care and less on paperwork.​
 
 ## Table of Content :
