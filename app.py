@@ -28,18 +28,21 @@ def register_user():
     db.session.commit()
     return jsonify({"message": "User registered successfully"}), 201
 
-# Login route for users
 @app.route('/login', methods=['POST'])
 def login_user():
     data = request.json
     email = data['email']
     password = data['password']
     
-    user = User.query.filter_by(email=email, password=password).first()
+    user = User.query.filter_by(email=email).first()
     if user:
-        return jsonify({"message": "Login successful", "user": user.to_dict()}), 200
+        if user.password == password:
+            return jsonify({"message": "Login successful", "user": user.to_dict()}), 200
+        else:
+            return jsonify({"error": "This is not the correct password"}), 401
     else:
         return jsonify({"error": "Please sign up first to access your account."}), 401
+
 
 # Add this to the existing Appointment model section
 class Appointment(db.Model):
