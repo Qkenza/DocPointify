@@ -2,7 +2,7 @@
 
 ## Description :
 
-![home](image.png)
+![home](image-1.png)
 
 **DocPointify** is a modern, web-based application designed to streamline the management of patient appointments for healthcare providers. This platform enables doctors and their assistants to log in, organize appointments, and manage patient information efficiently.​
 
@@ -25,15 +25,22 @@
     - Add, update, and delete patient records.
     - Store details like name, contact information, address and additional notes.
     - Search for patients by patient's name. 
+
+    ![Patients page](image-2.png)
     
 2. **Appointment Management** : 
    - Book, and cancel appointments.
    - View all scheduled appointments in an organized list.
+
+   ![Appaointments page](image-3.png)
    
 3. **User Roles** : 
    - The User model in the code is designed to store user credentials (email and password).
-   - No explicit roles (e.g., admin, assistant, doctor) are defined.
-   - All users appear to have the same level of access.
+   - If the user is new and an error message appears: "PLease sign up first to access account"
+   - If the user isn't logged in the appointments / patients pages are restricted.
+   
+   ![user](image-4.png)
+    
 
 
 ## Technologies Used :
