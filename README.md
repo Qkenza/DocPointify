@@ -2,7 +2,7 @@
 
 ## Description :
 
-DocPointify is a web-based application designed to streamline patient and appointment management for doctors and their cabinet staff or assistant. it works like an online calendar, a virtual agenda, enabling efficient handling of patient information and appointments in a user-friendly interface.
+DocPointify is a web-based application designed to streamline patient and appointment management for doctors and their cabinet staff or assistant. it works like an online calendar, a virtual agenda, enabling efficient handling of patient information and appointments in a user-friendly interface. it allows users to add, update, delete, and search through patient records and appointments.
 
 ## Table of Content :
 
@@ -10,8 +10,8 @@ DocPointify is a web-based application designed to streamline patient and appoin
 - [Table of Content](#table-of-content-)
 - [Features](#features-)
 - [Technologies Used](#technologies-used-)
-- [Installation and Setup](#installation-and-setup-)
-    - [Steps](#steps-)
+- [Installation](#installation)
+- [Running the project](#running-the-project-)
 - [API Endpoints](#api-endpoints)
 - [Contributors](#contributors-)
 
@@ -20,7 +20,7 @@ DocPointify is a web-based application designed to streamline patient and appoin
 
 1. **Patient Management** :
     - Add, update, and delete patient records.
-    - Store details like name, date of birth, contact information, address and additional notes.
+    - Store details like name, contact information, address and additional notes.
     - Search for patients by name or ID. 
     
 2. **Appointment Management** : 
@@ -32,57 +32,73 @@ DocPointify is a web-based application designed to streamline patient and appoin
    - Secure login system for users.
    - Session-based authentication for access to the app.
 
-4. **Patient and Appointment Search** :
-   - Search for patients and appointments using flexible search queries.
    
-
 ## Technologies Used :
 
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML, Advanced CSS, JS, ES6+
 - **Backend**: Python with Flask
-- **Database**: MongoDB
+- **Database**: SQLite
 - **Other Tools**: 
-     - Flask-PyMongo for MongoDB integration.
-     - hashlib for secure password hashing.
-     - re for regular expressions in search functionality.
-     - datetime for date handling in appointment searches.
+     - Flask-SQLAlchemy for database integration and ORM.
+     - Flask-CORS for handling Cross-Origin Resource Sharing (CORS).
+     - datetime for date and time handling, particularly in appointment scheduling.
 
-## Installation and Setup :
+## Installation  :
 
-- Install Python (3.8 or higher)
-- Install MongoDB
-- Install pip for managing Python packages
+1. **Install Python**
+   Ensure Python (3.8 or higher) is installed on your system.
 
-  ## Steps :
+2. **Clone the Repository**
+   ```bash
+   git clone https://github.com/zakariabahlaoui/DocPointify.git
+   cd DocPointify
+   ```
 
-1. Clone the repository:
-    ```bash
-    git clone < https://github.com/zakariabahlaoui/DocPointify.git >
-    cd DocPointify
-    ```
+3. **Install Dependencies**
+   - Install Flask-SQLAlchemy:
+     ```bash
+     pip install flask-sqlalchemy
+     ```
+   - Install Flask-CORS:
+     ```bash
+     pip install flask-cors
+     ```
 
-2. Set up a virtual environment:
-    ```bash
-    python -m venv venv
-    ```
+## Running the Project
 
-3. Install required dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+To see the project in action, follow these steps:
 
-4. Start the MongoDB server:
-    ```bash
-    mongod
-    ```
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/zakariabahlaoui/DocPointify.git
+   cd DocPointify
+   ```
 
-5. Run the Flask application:
-    ```bash
-    python app.py
-    ```
+2. **Install Python**
+   Ensure Python (3.8 or higher) is installed on your system.
 
-6. Access the web application:
-    Open your browser and go to http://localhost:5000
+3. **Install Required Python Libraries**
+   - Install Flask-SQLAlchemy:
+     ```bash
+     pip install flask-sqlalchemy
+     ```
+   - Install Flask-CORS:
+     ```bash
+     pip install flask-cors
+     ```
+
+4. **Run the Application**
+   ```bash
+   python app.py
+   ```
+
+5. **Verify the API**
+   - Once the application is running, check the terminal to ensure the API is functioning correctly.
+
+6. **View the Project in Browser**
+   - Navigate to the `Templates` directory, open the **home.html** file in Visual Studio Code, and go live.
+   - The project should now be accessible in your browser!
+
 
 ## API Endpoints
 
