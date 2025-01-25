@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Handle logout
-  logoutBtn?.addEventListener("click", () => {
-    localStorage.removeItem("isLoggedIn"); // Clear login state
-    showMessage("You have logged out successfully.", "green");
-    setTimeout(() => {
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("isLoggedIn"); // Clear login state
+      alert("You have logged out successfully.");
       window.location.href = "home.html"; // Redirect to the home page
-    }, 1500);
-  });
+    });
+  }
 
   // Restrict access to protected pages
   const restrictedLinks = document.querySelectorAll(".restricted");
