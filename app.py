@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from flask_sqlalchemy import SQLAlchemy
+from models import db, User, Entry
 from flask_cors import CORS
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,20 +7,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///entries.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+#Initialize the database with the app
+db.init_app(app)
 CORS(app)
-
-# User model to store email and password
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(200), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'email': self.email
-        }
 
 # Register route for new users
 @app.route('/register', methods=['POST'])
@@ -64,21 +54,7 @@ class Appointment(db.Model):
             'dateTime': self.date_time.isoformat()
         }
     
-class Entry(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    input1 = db.Column(db.String(200), nullable=False)
-    input2 = db.Column(db.String(200), nullable=False)
-    input3 = db.Column(db.String(200), nullable=False)
-    input4 = db.Column(db.String(200), nullable=False)
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'input1': self.input1,
-            'input2': self.input2,
-            'input3': self.input3,
-            'input4': self.input4
-        }
+  
     
 @app.route('/')
 def index():
