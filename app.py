@@ -49,7 +49,7 @@ def login_user():
     if user:
         return jsonify({"message": "Login successful", "user": user.to_dict()}), 200
     else:
-        return jsonify({"error": "Invalid credentials"}), 401
+        return jsonify({"error": "Please sign up first to access your account."}), 401
 
 # Add this to the existing Appointment model section
 class Appointment(db.Model):
