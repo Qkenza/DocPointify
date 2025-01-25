@@ -97,7 +97,7 @@ async function initializeCalendar() {
                           <div class="appointment-info">
                               <span class="appointment-name" 
                                   onclick="showPatientInfo('${arg.event.title}')"
-                                  style="cursor: pointer; color: blue; text-decoration: underline;"
+                                  style="cursor: pointer; color:#2c8dca; text-decoration: underline;"
                               >
                                   ${arg.event.title}
                               </span>
