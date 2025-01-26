@@ -108,6 +108,6 @@ To see the project in action, follow these steps:
 
 ## Contributors :
 
-- Zakaria Bahlaoui : Frontend devoloper [https://github.com/zakariabahlaoui]
-- Kenza Merouar : Full-Stack devoloper  [https://github.com/Qkenza]
+- Zakaria Bahlaoui : Full-Stack devoloper [https://github.com/zakariabahlaoui]
+- Kenza Merouar : Frontend devoloper  [https://github.com/Qkenza]
 - Chaimae Lahdili  : Backend devoloper [https://github.com/Chaiimae]
