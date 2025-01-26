@@ -21,12 +21,12 @@
 
 ## Features :
 
-1. **Patient Management** :
-    - Add, update, and delete patient records.
-    - Store details like name, contact information, address and additional notes.
-    - Search for patients by patient's name. 
-
-    ![Patients page](Readme%20img/image-2.png)
+1. **User Roles** : 
+   - The User model in the code is designed to store user credentials (email and password).
+   - If the user is new and an error message appears: "PLease sign up first to access account"
+   - If the user isn't logged in the appointments / patients pages are restricted.
+   
+   ![user](Readme%20img/image-4.png)
     
 2. **Appointment Management** : 
    - Book, and cancel appointments.
@@ -34,12 +34,12 @@
 
    ![Appaointments page](Readme%20img/image-3.png)
    
-3. **User Roles** : 
-   - The User model in the code is designed to store user credentials (email and password).
-   - If the user is new and an error message appears: "PLease sign up first to access account"
-   - If the user isn't logged in the appointments / patients pages are restricted.
-   
-   ![user](Readme%20img/image-4.png)
+3. **Patient Management** :
+    - Add, update, and delete patient records.
+    - Store details like name, contact information, address and additional notes.
+    - Search for patients by patient's name. 
+
+    ![Patients page](Readme%20img/image-2.png)
     
 
 
